@@ -6,6 +6,8 @@ Claude Code を個人で毎日使い込んで（2026年8月〜）、失敗から
 ## 中身
 
 - [failure-patterns/](failure-patterns/README.md) — 約160件の失敗から抜き出した「失敗の型」10種。症状・実例・原因・仕組みでの対策・CLAUDE.md に貼れる規則
+- [references/](references/README.md) — 参考にした公開記事
+- [share/](share/README.md) — 別の環境の Claude Code と知見を持ち寄るための書式
 
 ## 使い方
 
