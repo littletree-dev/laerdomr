@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ζ example</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200;300;400&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=IBM+Plex+Mono:wght@300;400&display=swap">
+<link rel="stylesheet" href="zeta.css">
+<style>
+/* 見本だけの指定。アプリの色面は1色だけ差し替える（ここでは藤紫） */
+:root{--z-f1:#5B4A92}
+body{margin:0}
+.wrap{max-width:660px;margin:0 auto;padding-inline:16px;padding-block:20px 60px;display:grid;gap:16px}
+header{display:grid;gap:6px;border-bottom:1px solid var(--z-line);padding-bottom:12px}
+h1{margin:0;font:300 22px var(--z-lat);letter-spacing:.34em}
+h1 i{font-family:"Times New Roman",serif;letter-spacing:0;color:var(--z-ink3)}
+.zhero{grid-template-columns:128px minmax(0,1fr)!important;gap:14px!important}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--z-line2);padding:3px}
+.seg button{background:none;border:0;color:var(--z-ink2);font:400 13.5px var(--z-jp);letter-spacing:.1em;min-height:42px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:rgba(238,242,239,.92);color:#0A1119;font-weight:500}
+.seg button::before{font-family:var(--z-mono);margin-right:7px}
+.seg [data-k="like"]::before{content:"○"} .seg [data-k="task"]::before{content:"□"} .seg [data-k="idea"]::before{content:"△"}
+textarea{width:100%;box-sizing:border-box;min-height:80px;background:rgba(10,17,25,.4);border:1px solid var(--z-line2);color:var(--z-ink);font:15px/1.7 var(--z-jp);padding:10px 12px}
+.save{background:rgba(238,242,239,.93);color:#0A1119;border:0;padding:14px;font:500 15px var(--z-jp);letter-spacing:.42em;cursor:pointer}
+.card{border:1px solid var(--z-line);background:rgba(10,17,25,.34);padding:13px;position:relative}
+.card::before{content:"";position:absolute;left:-1px;top:-1px;width:7px;height:7px;border:solid var(--z-line3);border-width:1px 0 0 1px}
+.card .k{font:400 11px var(--z-jp);letter-spacing:.16em;color:var(--z-ink3)}
+.card p{margin:6px 0 0;letter-spacing:.02em;line-height:1.75}
+.mon{display:flex;align-items:center;gap:12px;font:300 11px var(--z-mono);letter-spacing:.18em;color:var(--z-ink3)}
+.mon::after{content:"";flex:1;height:1px;background:var(--z-line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>notes <i>ζ</i></h1>
+    <div class="zproto"><span>ζ example</span><b>データは架空です</b></div>
+  </header>
+  <section class="zhero">
+    <div class="zfig zframe"><canvas id="fig" role="img" aria-label="記録した時刻と種類の図"></canvas></div>
+    <div class="zside"><div class="zcap">memory manifold μ</div><div class="zcode" id="read"></div><div class="zquote">what moved you,<br>in the order it moved you.</div></div>
+  </section>
+  <div class="seg" id="seg"><button data-k="like" aria-pressed="true">好み</button><button data-k="task" aria-pressed="false">タスク</button><button data-k="idea" aria-pressed="false">思いつき</button></div>
+  <textarea id="tx" placeholder="ひとこと（見本なので保存はしません）"></textarea>
+  <button class="save" id="add" type="button">入れる</button>
+  <p class="mon">2026年10月</p>
+  <div id="list" style="display:grid;gap:10px"></div>
+</div>
+<script src="zeta.js"></script>
+<script>
+// 架空のデータ：24件。t＝記録した時刻（時）、k＝種類、h＝写真の色相（無ければ null）
+const rnd=Z.rng('example'), K=['like','like','like','idea','task'];
+const posts=[...Array(24)].map((_,i)=>({id:'n'+i,t:+(7+rnd()*17).toFixed(2),k:K[Math.floor(rnd()*K.length)],h:rnd()<.6?Math.round(rnd()*360):null,text:['青い時計の文字盤','駅前の古い喫茶店','歌詞の2番を書き直す','和音を図にする案','照明の色温度'][i%5]}));
+const KR={like:.8,idea:.57,task:.33}, SYM={like:'○',task:'□',idea:'△'};
+const two=(n)=>String(Math.floor(n)).padStart(2,'0'), hm=(t)=>two(t)+':'+two((t%1)*60);
+function readout(){ const n={like:0,idea:0,task:0}; posts.forEach(p=>n[p.k]++);
+  document.getElementById('read').innerHTML='posts = <i>'+posts.length+'</i>\n○ '+n.like+'  △ '+n.idea+'  □ '+n.task+'\nθ = 時刻 · r = 種類\nlast = <i>'+hm(posts[posts.length-1].t)+'</i>'; }
+function scene(ctx,w,h,t,p){
+  const cx=w/2, cy=h/2, R=Math.min(w,h)/2-19, TAU=Math.PI*2; ctx.lineWidth=1;
+  ctx.strokeStyle=Z.ink(.2); Z.ring(ctx,cx,cy,R);
+  for(let i=0;i<24;i++){ const a=i/24*TAU-Math.PI/2, l=i%6?2.5:5; ctx.strokeStyle=Z.ink(i%6?.25:.55); Z.seg(ctx,[cx+Math.cos(a)*(R+2),cy+Math.sin(a)*(R+2)],[cx+Math.cos(a)*(R+2+l),cy+Math.sin(a)*(R+2+l)],1); }
+  ctx.setLineDash([1,4]); ctx.strokeStyle=Z.ink(.16); for(const k in KR) Z.ring(ctx,cx,cy,R*KR[k]); ctx.setLineDash([]);
+  ctx.fillStyle=Z.ink(.5); posts.forEach(q=>{ if(q.h==null) return; const r=Z.rng(q.id), a=q.h/360*TAU-Math.PI/2; for(let i=0;i<22;i++){ const da=(r()-.5)*.22, rr=R*(.9+r()*.08); if(i/22<=p) Z.dot(ctx,cx+Math.cos(a+da)*rr,cy+Math.sin(a+da)*rr,.55+r()*.5); } });
+  const pts=posts.map(q=>{ const r=Z.rng(q.id+'j'), a=q.t/24*TAU-Math.PI/2, rr=R*KR[q.k]+(r()-.5)*R*.1; return {x:cx+Math.cos(a)*rr+Math.sin(t*.5+r()*6)*.7,y:cy+Math.sin(a)*rr+Math.cos(t*.45+r()*6)*.7,k:q.k}; });
+  ctx.strokeStyle=Z.ink(.42); const n=pts.length, dr=p*(n-1);
+  for(let i=0;i<n-1;i++){ const f=Math.max(0,Math.min(1,dr-i)); if(f<=0) break; Z.seg(ctx,[pts[i].x,pts[i].y],[pts[i+1].x,pts[i+1].y],f); }
+  ctx.strokeStyle=Z.ink(.9);
+  pts.forEach(o=>{ if(o.k==='like') Z.ring(ctx,o.x,o.y,2.4); else if(o.k==='task') ctx.strokeRect(o.x-2.2,o.y-2.2,4.4,4.4); else { ctx.beginPath(); ctx.moveTo(o.x,o.y-2.8); ctx.lineTo(o.x+2.6,o.y+1.8); ctx.lineTo(o.x-2.6,o.y+1.8); ctx.closePath(); ctx.stroke(); } });
+  const L=pts[n-1]; if(L&&p>=1){ Z.ring(ctx,L.x,L.y,6.5); const b=(t%3)/3; ctx.strokeStyle=Z.ink(.5*(1-b)); Z.ring(ctx,L.x,L.y,6.5+b*10); }
+}
+const fig=Z.draw(document.getElementById('fig'),scene);
+function list(){ document.getElementById('list').innerHTML=posts.slice(-6).reverse().map(p=>'<article class="card"><div class="k">'+SYM[p.k]+' '+{like:'好み',task:'タスク',idea:'思いつき'}[p.k]+' · '+hm(p.t)+'</div><p>'+p.text+'</p></article>').join(''); }
+let kind='like';
+document.getElementById('seg').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; kind=b.dataset.k; document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); });
+document.getElementById('add').addEventListener('click',()=>{ const v=document.getElementById('tx').value.trim(); if(!v) return; const d=new Date();
+  posts.push({id:'n'+Date.now(),t:d.getHours()+d.getMinutes()/60,k:kind,h:null,text:v.replace(/[<>&]/g,'')}); document.getElementById('tx').value=''; readout(); list(); fig.redraw(); });
+readout(); list();
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+/* ζ（ゼータ）— 幾何と音の UI。使い方は README.md
+   着想：Raf0x00「3/4拍子音楽の幾何学的解釈 (p5.js)」（X @raf0x00）
+   単一の暗いテーマ。背景と色はすべて明示する */
+:root{
+  color-scheme:dark;
+  --z-bg:#0A1119;
+  --z-ink:#EEF2EF;
+  --z-ink2:rgba(238,242,239,.70);
+  --z-ink3:rgba(238,242,239,.46);
+  --z-ink4:rgba(238,242,239,.28);
+  --z-line:rgba(238,242,239,.15);
+  --z-line2:rgba(238,242,239,.32);
+  --z-line3:rgba(238,242,239,.62);
+  --z-glass:rgba(10,17,25,.38);
+  --z-glass2:rgba(238,242,239,.045);
+  --z-press:rgba(238,242,239,.10);
+  /* 色面（アプリごとに上書き） */
+  --z-f1:#4E7A2C; --z-f2:#7F7A34; --z-f3:#2C6A68; --z-f4:#1C3656; --z-f5:#6A3B26;
+  /* 意味の色は彩度を落として、白線の世界から浮かせすぎない */
+  --z-warn:#E6C77E; --z-bad:#E89A8E; --z-good:#9FD3B0;
+  --z-acc:#DCE9E3;
+  --z-lat:"Josefin Sans","Avenir Next","Segoe UI",sans-serif;
+  --z-jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+  --z-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+html{background:var(--z-bg)!important}
+body{background:transparent!important;color:var(--z-ink);font-family:var(--z-jp);-webkit-font-smoothing:antialiased;font-feature-settings:"palt" 1}
+
+/* ── 色面（背景）───────────────────────── */
+#zf{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--z-bg)}
+#zf i{position:absolute;display:block;border-radius:50%;will-change:transform}
+#zf i:nth-child(1){width:95vmax;height:95vmax;left:-38vmax;top:-30vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f1) 85%,transparent),transparent);animation:zdrift1 46s ease-in-out infinite alternate}
+#zf i:nth-child(2){width:80vmax;height:80vmax;right:-34vmax;top:4vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f3) 80%,transparent),transparent);animation:zdrift2 58s ease-in-out infinite alternate}
+#zf i:nth-child(3){width:90vmax;height:90vmax;left:-20vmax;bottom:-46vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f2) 80%,transparent),transparent);animation:zdrift3 52s ease-in-out infinite alternate}
+#zf i:nth-child(4){width:70vmax;height:70vmax;right:-30vmax;bottom:-20vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f4) 90%,transparent),transparent);animation:zdrift1 64s ease-in-out infinite alternate-reverse}
+#zf i:nth-child(5){width:44vmax;height:44vmax;left:34vmax;top:-26vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f5) 55%,transparent),transparent);animation:zdrift2 40s ease-in-out infinite alternate-reverse}
+/* 上に薄い紺を一枚。色面を「遠くの光」にする */
+#zf::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,17,25,.30),rgba(10,17,25,.52) 60%,rgba(10,17,25,.70))}
+@keyframes zdrift1{to{transform:translate(9vmax,7vmax) scale(1.08)}}
+@keyframes zdrift2{to{transform:translate(-8vmax,10vmax) scale(.94)}}
+@keyframes zdrift3{to{transform:translate(7vmax,-9vmax) scale(1.05)}}
+
+/* ── 小さな札（版や状態を書く） ── */
+.zproto{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font:400 10.5px/1.5 var(--z-mono);letter-spacing:.04em;color:var(--z-ink3)}
+.zproto b{font-weight:400;color:var(--z-warn)}
+
+/* ── 計器の枠（動画の中央の正方形）───────────── */
+.zframe{position:relative;border:1px solid var(--z-line2)}
+.zframe::before,.zframe::after{content:"";position:absolute;width:7px;height:7px;border:solid var(--z-line3);pointer-events:none}
+.zframe::before{left:-1px;top:-1px;border-width:1px 0 0 1px}
+.zframe::after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
+
+/* 見出しの欧文（Piano / Chord / Tempo の役） */
+.zlat{font-family:var(--z-lat);font-weight:300;letter-spacing:.22em;text-transform:none}
+.zcap{font:300 10.5px/1.6 var(--z-lat);letter-spacing:.24em;color:var(--z-ink3);text-transform:lowercase}
+.zcode{font:300 11px/1.65 var(--z-mono);color:var(--z-ink3);letter-spacing:.01em;white-space:pre-wrap;overflow-wrap:anywhere}
+.zcode i{font-style:normal;color:var(--z-ink2)}
+.zquote{font:300 11.5px/1.9 var(--z-lat);letter-spacing:.16em;color:var(--z-ink3)}
+
+/* 幾何の図（canvas）。図は必ず正方形の枠の中に置く */
+.zhero{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;margin-top:14px}
+.zhero .zfig{position:relative;aspect-ratio:1/1;max-width:100%}
+.zhero canvas,.zfig canvas{position:absolute;inset:0;width:100%!important;height:100%!important;display:block}
+.zfig{position:relative;overflow:hidden}
+.zhero .zside{display:grid;gap:8px;align-content:start;min-width:0}
+.zrow{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+@media (min-width:520px){.zrow{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
+
+:focus-visible{outline:1px solid var(--z-line3)!important;outline-offset:2px!important}
+@media (prefers-reduced-motion:reduce){#zf i{animation:none!important}}
+/* 効果音の切り替え（.zproto の中に自動で置く）*/
+.zsnd{margin-left:auto;font:300 10.5px/1 var(--z-mono);letter-spacing:.06em;color:var(--z-ink2);background:transparent;border:1px solid var(--z-line2);padding:5px 8px;cursor:pointer;pointer-events:auto}
+.zsnd[aria-pressed="true"]{background:rgba(238,242,239,.92);color:#0A1119;border-color:transparent}
+/* 重さ対策：繰り返す面（カード）にはぼかしを掛けない。背景の色面はもともと滑らかなので、見た目は変わらない。
+   ぼかしは上下の帯（見出し・下のナビ）だけに残す（下を文字が流れるため）*/
+.post,.art,.list,.song,.card,.app,.panel,.form,.issue,.legend,.cathead,textarea,input[type=text]{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
