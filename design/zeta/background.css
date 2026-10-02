@@ -1,0 +1,29 @@
+/* ζ background only. No image, font, network or JavaScript dependency.
+   Layer geometry, alpha and animation match the shared application background.
+   See BACKGROUND.md for markup, palettes and stacking requirements. */
+:root{--z-bg:#0A1119}
+:root{--z-f1:#4E7A2C;--z-f2:#7F7A34;--z-f3:#2C6A68;--z-f4:#1C3656;--z-f5:#6A3B26;}
+[data-zeta-palette="notes"]{--z-f1:#5B4A92;--z-f2:#4E7A2C;--z-f3:#2C6A68;--z-f4:#1F3558;--z-f5:#7A5A2A;}
+[data-zeta-palette="lyrics"]{--z-f1:#2F7A5A;--z-f2:#6E7A34;--z-f3:#2C6A78;--z-f4:#1C3656;--z-f5:#4A5A2A;}
+[data-zeta-palette="usage"]{--z-f1:#2C5E7A;--z-f2:#4E6E3A;--z-f3:#2C6A68;--z-f4:#1C3656;--z-f5:#5A4A2E;}
+[data-zeta-palette="tasks"]{--z-f1:#5B4A92;--z-f2:#566E30;--z-f3:#2C6A68;--z-f4:#1F3558;--z-f5:#6A4A2A;}
+[data-zeta-palette="feed"]{--z-f1:#7A6232;--z-f2:#56702E;--z-f3:#2C5E5E;--z-f4:#1C3656;--z-f5:#6A3B26;}
+[data-zeta-palette="map"]{--z-f1:#4E7A2C;--z-f2:#6E7A34;--z-f3:#2C6A68;--z-f4:#1C3656;--z-f5:#5A4A2A;}
+[data-zeta-palette="compare"]{--z-f1:#4E7A2C;--z-f2:#7F7A34;--z-f3:#2C6A68;--z-f4:#1C3656;--z-f5:#5B4A92;}
+html.zeta-page{background:var(--z-bg);color-scheme:dark}
+body.zeta-page{margin:0;min-height:100vh;isolation:isolate;background:transparent;color:#EEF2EF}
+.zeta-content{position:relative;z-index:1;min-height:100vh}
+.zeta-background{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--z-bg)}
+.zeta-background i{position:absolute;display:block;border-radius:50%;will-change:transform}
+.zeta-background i:nth-child(1){width:95vmax;height:95vmax;left:-38vmax;top:-30vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f1) 85%,transparent),transparent);animation:zdrift1 46s ease-in-out infinite alternate}
+.zeta-background i:nth-child(2){width:80vmax;height:80vmax;right:-34vmax;top:4vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f3) 80%,transparent),transparent);animation:zdrift2 58s ease-in-out infinite alternate}
+.zeta-background i:nth-child(3){width:90vmax;height:90vmax;left:-20vmax;bottom:-46vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f2) 80%,transparent),transparent);animation:zdrift3 52s ease-in-out infinite alternate}
+.zeta-background i:nth-child(4){width:70vmax;height:70vmax;right:-30vmax;bottom:-20vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f4) 90%,transparent),transparent);animation:zdrift1 64s ease-in-out infinite alternate-reverse}
+.zeta-background i:nth-child(5){width:44vmax;height:44vmax;left:34vmax;top:-26vmax;background:radial-gradient(closest-side,color-mix(in srgb,var(--z-f5) 55%,transparent),transparent);animation:zdrift2 40s ease-in-out infinite alternate-reverse}
+/* 上に薄い紺を一枚。色面を「遠くの光」にする */
+.zeta-background::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,17,25,.30),rgba(10,17,25,.52) 60%,rgba(10,17,25,.70))}
+@keyframes zdrift1{to{transform:translate(9vmax,7vmax) scale(1.08)}}
+@keyframes zdrift2{to{transform:translate(-8vmax,10vmax) scale(.94)}}
+@keyframes zdrift3{to{transform:translate(7vmax,-9vmax) scale(1.05)}}
+.zeta-background[data-motion="still"] i{animation:none!important}
+@media (prefers-reduced-motion:reduce){.zeta-background i{animation:none!important}}

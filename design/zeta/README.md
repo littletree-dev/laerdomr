@@ -8,6 +8,7 @@ Claude Code に「この見た目で作って」と頼むときの指示書と�
 
 - 見本：[example.html](example.html)（ダウンロードしてブラウザで開くと動きます。データは架空）
 - 部品：[zeta.css](zeta.css)・[zeta.js](zeta.js)（どの画面にも後から足せる）
+- **背景の質感や色を別環境で再現する**：[BACKGROUND.md](BACKGROUND.md)。背景だけの動く見本 [background.html](background.html)、外部依存のない [background.css](background.css)、自宅版の6アプリ・見比べ帳の配色を収録。背景は画像ではなくCSSの色面です。
 
 ## 出典と着想
 

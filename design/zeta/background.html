@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja" class="zeta-page" data-zeta-palette="compare">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ζ — 背景の再現見本</title>
+<link rel="stylesheet" href="background.css">
+<style>
+*{box-sizing:border-box}body{font:15px/1.8 system-ui,sans-serif}
+main{padding:clamp(24px,6vw,80px);max-width:1100px;margin:auto}
+h1{font-size:clamp(28px,5vw,54px);font-weight:300;letter-spacing:.1em;margin:0 0 16px}
+p{max-width:42em;color:rgba(238,242,239,.7)}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:28px 0}
+select,button{font:inherit;color:#EEF2EF;border:1px solid rgba(238,242,239,.32);border-radius:2px;padding:8px 12px;background:#0A1119}
+button{cursor:pointer}button:focus-visible,select:focus-visible{outline:2px solid #EEF2EF;outline-offset:3px}
+.swatches{display:flex;flex-wrap:wrap;gap:14px;margin:24px 0}
+.swatches span{display:grid;gap:6px;font:12px/1.6 monospace}
+.swatches i{display:block;width:64px;height:24px;border:1px solid rgba(238,242,239,.32)}
+article{margin-top:40px;max-width:640px;border:1px solid rgba(238,242,239,.15);background:rgba(10,17,25,.34);padding:24px}
+article h2{font-weight:400;font-size:18px;margin-top:0}code{overflow-wrap:anywhere}
+.spacer{height:30vh}footer{font-size:12px;color:rgba(238,242,239,.46)}
+</style>
+<body class="zeta-page">
+<div class="zeta-background" aria-hidden="true" data-motion="still"><i></i><i></i><i></i><i></i><i></i></div>
+<main class="zeta-content">
+<h1>遠くの光を重ねる。</h1>
+<p>暗い紺に、画面より大きな5つの色面。最後に紺の幕を重ねた背景です。写真やノイズ画像は使っていません。</p>
+<div class="controls"><label for="palette">配色</label><select id="palette"><option value="default">共通</option><option value="compare" selected>見比べ帳</option><option value="notes">記録</option><option value="lyrics">作詞</option><option value="usage">利用量</option><option value="tasks">タスク</option><option value="feed">フィード</option><option value="map">地図</option></select><button id="motion" type="button" aria-pressed="false">動かす</button></div>
+<div class="swatches" aria-label="色面の元の色"></div>
+<article><h2>背景を隠さない面</h2><p>このカードは <code>rgba(10,17,25,.34)</code>。不透明な背景や大きなぼかしを足すと、同じ色を使っても印象が変わります。</p><p>初期状態は比較しやすい静止画です。「動かす」で元のゆっくりした動きに戻ります。端末の「動きを減らす」設定を優先します。</p></article>
+<div class="spacer"></div><footer>ζ / 背景だけの見本 · 外部通信なし · 実データなし</footer>
+</main>
+<script>
+const palette=document.querySelector('#palette'), motion=document.querySelector('#motion'), field=document.querySelector('.zeta-background');
+function render(){document.documentElement.dataset.zetaPalette=palette.value;const css=getComputedStyle(document.documentElement);const list=document.querySelector('.swatches');list.replaceChildren();for(let i=1;i<=5;i++){const color=css.getPropertyValue('--z-f'+i).trim();const span=document.createElement('span'),chip=document.createElement('i');chip.style.background=color;span.append(chip,document.createTextNode(color));list.append(span)}}
+palette.addEventListener('change',render);motion.addEventListener('click',()=>{const playing=field.dataset.motion==='still';field.dataset.motion=playing?'animated':'still';motion.setAttribute('aria-pressed',String(playing));motion.textContent=playing?'止める':'動かす'});render();
+</script>
+</body></html>
