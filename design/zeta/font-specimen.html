@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ζ 書体見本帳</title>
+<style>
+*{box-sizing:border-box}body{margin:0}
+/* Layout: one specimen panel in the ζ look on top, three lists of candidates below; tap a candidate to swap it into the panel. */
+:root{
+  --ground:#0A1119; --glass:rgba(10,17,25,.42); --line:rgba(255,255,255,.55); --hair:rgba(255,255,255,.18);
+  --ink:#F2F5F3; --mute:rgba(242,245,243,.62); --moss:#5E7A3A; --teal:#1F5A5A; --ochre:#7A7A3A;
+  --disp:'Josefin Sans',sans-serif; --jp:'Zen Kaku Gothic New',sans-serif; --mono:'Martian Mono',monospace;
+  --dw:300; --track:.28em; color-scheme:dark;
+}
+html,body{background:var(--ground);color:var(--ink)}
+body{font-family:var(--jp);padding-inline:16px;padding-block:20px 48px;position:relative;overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.55;z-index:0;pointer-events:none}
+.b1{width:60vw;height:50vh;left:-10vw;top:10vh;background:var(--moss)}
+.b2{width:50vw;height:60vh;right:-12vw;top:-8vh;background:var(--teal)}
+.b3{width:40vw;height:40vh;left:30vw;bottom:-10vh;background:var(--ochre)}
+@media (prefers-reduced-motion:no-preference){.blob{animation:drift 26s ease-in-out infinite alternate}.b2{animation-duration:32s}.b3{animation-duration:38s}}
+@keyframes drift{to{transform:translate(4vw,3vh) scale(1.08)}}
+main{position:relative;z-index:1;max-width:1040px;margin:0 auto;display:grid;gap:28px}
+header{display:grid;gap:6px}
+.eyebrow{font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:.14em;color:var(--mute)}
+h1{font-family:var(--disp);font-weight:var(--dw);letter-spacing:var(--track);font-size:clamp(22px,4vw,34px);margin:0;text-wrap:balance}
+.lead{font-size:14px;line-height:1.8;color:var(--mute);max-width:62ch;margin:0}
+.panel{border:1px solid var(--line);border-radius:2px;background:var(--glass);backdrop-filter:blur(6px);padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px}
+@media (max-width:700px){.panel{grid-template-columns:1fr}}
+.col{display:grid;gap:18px;align-content:start;min-width:0}
+.lbl{font-family:var(--disp);font-weight:var(--dw);letter-spacing:var(--track);font-size:15px}
+.code{font-family:var(--mono);font-weight:300;font-size:12px;color:var(--mute);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.bars{display:grid;gap:5px}.bars i{display:block;height:1px;background:var(--line)}
+.ttl{font-family:var(--disp);font-weight:var(--dw);letter-spacing:.18em;font-size:13px;text-align:center;color:var(--mute)}
+.jp-h{font-family:var(--jp);font-weight:500;font-size:20px;margin:0}
+.jp-b{font-family:var(--jp);font-weight:400;font-size:14px;line-height:1.85;margin:0;color:var(--ink)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.card{border:1px solid var(--hair);border-radius:2px;padding:10px 12px;display:grid;gap:4px}
+.card b{font-family:var(--jp);font-weight:500;font-size:14px}
+.num{font-family:var(--mono);font-weight:300;font-size:22px;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn{font-family:var(--jp);font-size:13px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:8px 14px;border-radius:2px}
+.btn.on{background:var(--ink);color:var(--ground)}
+.now{font-family:var(--mono);font-weight:300;font-size:12px;border:1px solid var(--hair);padding:10px 12px;border-radius:2px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.now span{overflow-wrap:anywhere;min-width:0}
+.presets{display:flex;gap:8px;flex-wrap:wrap}
+.lists{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.lists{grid-template-columns:1fr}}
+.list{display:grid;gap:8px;align-content:start;min-width:0}
+.list h2{font-family:var(--mono);font-weight:300;font-size:11px;letter-spacing:.14em;color:var(--mute);margin:0}
+.opt{all:unset;cursor:pointer;border:1px solid var(--hair);border-radius:2px;padding:10px 12px;display:grid;gap:4px;min-width:0}
+.opt:hover{border-color:var(--line)}
+.opt:focus-visible{outline:1px solid var(--ink);outline-offset:2px}
+.opt[aria-pressed="true"]{border-color:var(--ink);background:rgba(255,255,255,.07)}
+.opt .s{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.opt .n{font-family:var(--mono);font-weight:300;font-size:11px;color:var(--mute)}
+.opt .note{font-size:11.5px;color:var(--mute);font-family:'Zen Kaku Gothic New',sans-serif;line-height:1.6}
+label.try{display:grid;gap:6px;font-size:12px;color:var(--mute)}
+input#sample{font:inherit;font-family:var(--jp);font-size:15px;color:var(--ink);background:transparent;border:1px solid var(--hair);border-radius:2px;padding:10px 12px}
+footer{font-size:12px;color:var(--mute);line-height:1.8}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@100;200;300;400&family=Jost:wght@100;200;300;400&family=Montserrat:wght@100;200;300;400&family=Raleway:wght@100;200;300;400&family=Outfit:wght@100;200;300;400&family=Sora:wght@100;200;300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&family=Syncopate&family=Unica+One&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@200;300;400&family=JetBrains+Mono:wght@200;300;400&family=DM+Mono:wght@300;400&family=Space+Mono&family=Martian+Mono:wght@200;300;400&family=Azeret+Mono:wght@200;300;400&family=Red+Hat+Mono:wght@300;400&family=Fira+Code:wght@300&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500&family=IBM+Plex+Sans+JP:wght@200;300;400;500&family=M+PLUS+1:wght@200;300;400;500&family=Murecho:wght@200;300;400;500&family=Noto+Sans+JP:wght@200;300;400;500&family=BIZ+UDPGothic&family=M+PLUS+1+Code:wght@200;300;400;500&family=Zen+Maru+Gothic:wght@300;400;500&display=swap">
+
+</head><body>
+<div aria-hidden="true" class="blob b1"></div><div aria-hidden="true" class="blob b2"></div><div aria-hidden="true" class="blob b3"></div>
+<main>
+  <header>
+    <div class="eyebrow">ζ type specimen · 3 roles × 8</div>
+    <h1>Geometric type manifold ζ</h1>
+    <p class="lead">見出しの欧文・日本語・数字とコードの3役を、候補から1つずつ選んで差し替えられます。上の見本がζの画面と同じ組み方で変わります。気に入った組み合わせは、下の「いまの組み合わせ」をそのまま教えてください。</p>
+  </header>
+
+  <section class="panel" aria-label="見本">
+    <div class="col">
+      <div class="lbl">Piano</div>
+      <div class="bars"><i style="width:82%"></i><i style="width:64%"></i><i style="width:90%"></i></div>
+      <div class="lbl">Chord</div>
+      <div class="code">B♭m · D♭ · E♭ · F · A♭ &nbsp;|&nbsp; 3/4</div>
+      <div class="lbl">Tempo</div>
+      <div class="code">posts = 37 &nbsp; 完走 = 4 / 8 &nbsp; 09:00–10:00</div>
+      <div class="ttl">Geometric acoustic manifold ζ (Zeta)</div>
+    </div>
+    <div class="col">
+      <p class="jp-h" id="jpH">記憶の多様体</p>
+      <p class="jp-b" id="jpB">角度は入れた時刻、半径は種別。外周の点は写真から測った色相です。今日は好みが3件、思いつきが2件増えました。</p>
+      <div class="cards">
+        <div class="card"><span class="code">sample / week</span><span class="num">42%</span><b>週の残り</b></div>
+        <div class="card"><span class="code">sample / timer</span><span class="num">0:30</span><b>次の回復</b></div>
+      </div>
+      <div class="btns"><button class="btn on" type="button">保存する</button><button class="btn" type="button">あとで</button></div>
+    </div>
+  </section>
+
+  <label class="try" for="sample">自分の文で試す（見本の日本語の本文が入れ替わります）
+    <input id="sample" type="text" placeholder="例：この配色と書体をアプリに使いたい">
+  </label>
+
+  <div class="now"><span id="now"></span><button class="btn" type="button" id="copy">組み合わせをコピー</button></div>
+  <div class="presets" id="presets"></div>
+
+  <section class="lists">
+    <div class="list" id="L-disp"><h2>DISPLAY · 見出しの欧文</h2></div>
+    <div class="list" id="L-jp"><h2>JAPANESE · 日本語</h2></div>
+    <div class="list" id="L-mono"><h2>MONO · 数字とコード</h2></div>
+  </section>
+
+  <footer>候補はすべて Google Fonts（無料・OFL などのオープンライセンス）。気に入ったものは、別のPCでも同じ書体を指定できます。表示内容は架空の見本です。</footer>
+</main>
+
+<script>
+const D=[
+ ['Josefin Sans',300,'.28em','いまのζ。幾何学的で細く、字間を広げると動画に近い'],
+ ['Jost',300,'.26em','Futura系。より端正で、Josefinより硬い'],
+ ['Montserrat',200,'.3em','細字を広く空けると、宇宙・計器っぽさが出る'],
+ ['Raleway',200,'.28em','極細で上品。線が多い画面に馴染む'],
+ ['Outfit',200,'.26em','丸みのある幾何。やわらかい未来感'],
+ ['Sora',200,'.24em','少し横長で技術寄り'],
+ ['Michroma',400,'.2em','横に広い計器の文字。1語の見出し専用向き'],
+ ['Syncopate',400,'.3em','大文字だけの書体。題字に効く'],
+];
+const J=[
+ ['Zen Kaku Gothic New','いまのζ。クセが少なく端正'],
+ ['IBM Plex Sans JP','Plex Monoと同じ一族。コードと本文の一貫性が出る'],
+ ['M PLUS 1','細めでモダン。字面が小さく軽い'],
+ ['Murecho','角の切れが鋭く、技術感がある'],
+ ['Noto Sans JP','標準的で読みやすい。個性は控えめ'],
+ ['BIZ UDPGothic','読みやすさ優先。Windowsにも同梱'],
+ ['M PLUS 1 Code','等幅寄りの日本語。画面全体がコードっぽくなる'],
+ ['Zen Maru Gothic','丸ゴシック。やわらかい方向に振る場合'],
+];
+const M=[
+ ['IBM Plex Mono',300,'いまのζ。端正で数字が読みやすい'],
+ ['JetBrains Mono',300,'開発者向けの定番。縦長で詰まって見える'],
+ ['DM Mono',300,'軽くて丸い。飾りのコードに合う'],
+ ['Space Mono',400,'レトロな宇宙感。個性が強い'],
+ ['Martian Mono',200,'横に広く、計器の読み値っぽい'],
+ ['Azeret Mono',200,'細く広い。動画の小さなコード文字に近い'],
+ ['Red Hat Mono',300,'あっさりした等幅'],
+ ['Fira Code',300,'リガチャ（=> などの合字）入り'],
+];
+const P=[
+ ['推奨の組み合わせ','Josefin Sans','Zen Kaku Gothic New','Martian Mono'],
+ ['いまのζ','Josefin Sans','Zen Kaku Gothic New','IBM Plex Mono'],
+ ['一族でそろえる','Jost','IBM Plex Sans JP','IBM Plex Mono'],
+ ['計器','Michroma','Murecho','Martian Mono'],
+ ['極細','Raleway','M PLUS 1','Azeret Mono'],
+];
+const st={d:'Josefin Sans',j:'Zen Kaku Gothic New',m:'Martian Mono'};
+const r=document.documentElement.style;
+function apply(){
+  const d=D.find(x=>x[0]===st.d), m=M.find(x=>x[0]===st.m);
+  r.setProperty('--disp',`'${st.d}',sans-serif`); r.setProperty('--dw',d[1]); r.setProperty('--track',d[2]);
+  r.setProperty('--jp',`'${st.j}',sans-serif`); r.setProperty('--mono',`'${st.m}',monospace`);
+  document.querySelectorAll('.code,.num,.eyebrow').forEach(e=>e.style.fontWeight=m[1]);
+  document.getElementById('now').textContent=`いまの組み合わせ：欧文 ${st.d} / 日本語 ${st.j} / 数字 ${st.m}`;
+  document.querySelectorAll('.opt').forEach(b=>b.setAttribute('aria-pressed',String(st[b.dataset.k]===b.dataset.v)));
+  document.querySelectorAll('#presets .btn').forEach(b=>b.classList.toggle('on',b.dataset.d===st.d&&b.dataset.j===st.j&&b.dataset.m===st.m));
+}
+function mk(list,k,id,f){
+  const box=document.getElementById(id);
+  list.forEach(x=>{
+    const b=document.createElement('button'); b.className='opt'; b.type='button'; b.dataset.k=k; b.dataset.v=x[0]; b.id=`opt-${k}-${x[0].replace(/\W+/g,'-')}`;
+    const s=document.createElement('span'); s.className='s'; f(s,x);
+    const n=document.createElement('span'); n.className='n'; n.textContent=x[0];
+    const t=document.createElement('span'); t.className='note'; t.textContent=x[x.length-1];
+    b.append(s,n,t); b.onclick=()=>{st[k]=x[0];apply()}; box.append(b);
+  });
+}
+mk(D,'d','L-disp',(s,x)=>{s.textContent='Piano · Tempo';s.style.fontFamily=`'${x[0]}',sans-serif`;s.style.fontWeight=x[1];s.style.letterSpacing=x[2]});
+mk(J,'j','L-jp',(s,x)=>{s.textContent='記憶の多様体と時刻';s.style.fontFamily=`'${x[0]}',sans-serif`});
+mk(M,'m','L-mono',(s,x)=>{s.textContent='posts = 37  4/8';s.style.fontFamily=`'${x[0]}',monospace`;s.style.fontWeight=x[1]});
+const pr=document.getElementById('presets');
+P.forEach(p=>{const b=document.createElement('button');b.className='btn';b.type='button';b.textContent=p[0];[b.dataset.d,b.dataset.j,b.dataset.m]=p.slice(1);b.onclick=()=>{st.d=p[1];st.j=p[2];st.m=p[3];apply()};pr.append(b)});
+const jb=document.getElementById('jpB'), orig=jb.textContent;
+document.getElementById('sample').addEventListener('input',e=>{jb.textContent=e.target.value||orig});
+document.getElementById('copy').onclick=async e=>{const t=document.getElementById('now').textContent;try{await navigator.clipboard.writeText(t);e.target.textContent='コピーしました'}catch{const s=getSelection(),rg=document.createRange();rg.selectNodeContents(document.getElementById('now'));s.removeAllRanges();s.addRange(rg);e.target.textContent='選択しました'}setTimeout(()=>e.target.textContent='組み合わせをコピー',1600)};
+apply();
+</script>
+
+</body></html>

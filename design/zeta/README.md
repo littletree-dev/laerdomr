@@ -4,6 +4,8 @@
 個人用の小さな Web アプリ（入力・一覧・計器）6つを、一晩でこの見た目にそろえたときの知見をまとめました。
 Claude Code に「この見た目で作って」と頼むときの指示書としても使えます。
 
+**おすすめの再現基準：フォント見比べ版** → [FONT-SPECIMEN.md](FONT-SPECIMEN.md)・[動くフォント見本](font-specimen.html)。3色を80pxぼかした背景と、Josefin Sans / Zen Kaku Gothic New / Martian Monoの組み合わせを収録。下記の従来の5色版とは背景の作り方が異なります。
+
 ![見本の画面（データは架空）](preview.png)
 
 - 見本：[example.html](example.html)（ダウンロードしてブラウザで開くと動きます。データは架空）

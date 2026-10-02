@@ -1,0 +1,13 @@
+/* Font specimen background: three blurred color fields. See FONT-SPECIMEN.md. */
+:root{--ground:#0A1119;--moss:#5E7A3A;--teal:#1F5A5A;--ochre:#7A7A3A;--ink:#F2F5F3;--glass:rgba(10,17,25,.42);--line:rgba(255,255,255,.55);--hair:rgba(255,255,255,.18)}
+html,body{background:var(--ground);color:var(--ink)}
+body{margin:0;position:relative;isolation:isolate;overflow-x:hidden}
+.blob{position:fixed;border-radius:50%;filter:blur(80px);opacity:.55;z-index:0;pointer-events:none}
+.b1{width:60vw;height:50vh;left:-10vw;top:10vh;background:var(--moss)}
+.b2{width:50vw;height:60vh;right:-12vw;top:-8vh;background:var(--teal)}
+.b3{width:40vw;height:40vh;left:30vw;bottom:-10vh;background:var(--ochre)}
+@media (prefers-reduced-motion:no-preference){.blob{animation:drift 26s ease-in-out infinite alternate}.b2{animation-duration:32s}.b3{animation-duration:38s}}
+@keyframes drift{to{transform:translate(4vw,3vh) scale(1.08)}}
+
+.font-content{position:relative;z-index:1}
+.font-panel{border:1px solid var(--line);border-radius:2px;background:var(--glass);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
