@@ -6,7 +6,7 @@
 
 ![推奨の組み合わせと、3色をぼかした背景](font-specimen-preview.png)
 
-## 共通アプリ版との違い
+## アプリ共通版との違い
 
 | 要素 | このフォント見比べ版 | アプリ共通版（BACKGROUND.md） |
 |---|---|---|
@@ -38,7 +38,7 @@
 | 青緑 | 50vw × 60vh | right -12vw / top -8vh |
 | オリーブ | 40vw × 40vh | left 30vw / bottom -10vh |
 
-全て `position:fixed; border-radius:50%; filter:blur(80px); opacity:.55`。動きは26・32・38秒で、移動4vw/3vh・拡大1.08。端末が動きを減らす設定なら停止します。色面の親にtransformやfilterを付けないでください。
+すべて `position:fixed; border-radius:50%; filter:blur(80px); opacity:.55`。動きは26・32・38秒で、移動4vw/3vh・拡大1.08。端末が動きを減らす設定なら停止します。色面の親にtransformやfilterを付けないでください。
 
 ## 文字とパネル
 
